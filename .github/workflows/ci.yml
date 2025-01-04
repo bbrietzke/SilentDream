@@ -6,6 +6,23 @@ on:
     branches: [ main ]
 
 jobs:
+  docker:
+    needs: [scan_ruby, scan_js, lint]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Log into DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ vars.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Setup Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Build and Push
+        uses: docker/build-push-action@v6
+        with:
+          platforms: linux/amd64,linux/arm64 #,linux/arm/7,linux/arm/8
+          push: true
+          tags: bbrietzke/empty_smoke:dev,bbrietzke/empty_smoke:${{ github.run_id }}
   scan_ruby:
     runs-on: ubuntu-latest
 

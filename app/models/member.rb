@@ -3,6 +3,6 @@ class Member < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
-				 :confirmable, :lockable, :timeoutable, :trackable,
-				 :omniauthable
+         :confirmable, :lockable, :timeoutable, :trackable,
+         :omniauthable
 end
